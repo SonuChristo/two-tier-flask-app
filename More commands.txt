@@ -1,0 +1,22 @@
+in docker file 
+	: in order to install mysql client use command - apt-get install -y gcc default-libmysqlclient-dev pkg-config \
+	  && rm-rf var/lib/apt/lists/*
+
+
+you must also create an docker container for the mysql through using the command - docker run -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD="admin" mysql:5.7
+
+* Later Inorder ton connect these both you have to create a network between them 
+* You can do it by using command - docker network create twotier
+* To check the networks running you can view them by using command - docker network ls
+* To inspect on the network you can use the command - docker network inspect twotier
+
+* and most importantly don't forget to set the env variables by seeing the program
+
+
+* to create a mysql container use command - docker run -d -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD="admin" mysql:5.7
+
+* Then finally to run a container of flask with env and network use command - docke run -d -p 5000:5000 --network=twotier -e MYSQL_HOST=mysql -e MYSQL_USER=admin -e MYSQL_PASSWORD=admin -e MYSQL_DB=my_db flask-app:latest
+
+* Then finally to run a container of mysql env and network use command - docke run -d -p 3306:3306 --network=twotier -e MYSQL_USER=admin -e MYSQL_PASSWORD=admin -e MYSQL_DB=my_db -e MYSQL_ROOT_PASSWORD=admin mysql:5.7
+
+* Now to enter into the container and execute the commands use command - docker exec -it (mysqlcontainerid) bash-- this command states that enter into the execute interactive mode of that container in bash mode
